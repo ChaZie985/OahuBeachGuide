@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_light">
+
+    <!-- Background Shapes -->
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="-80dp"
+        android:layout_marginEnd="-80dp"
+        android:src="@drawable/bg_shape_top" />
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="bottom|start"
+        android:layout_marginBottom="-80dp"
+        android:layout_marginStart="-80dp"
+        android:src="@drawable/bg_shape_bottom" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="← Back"
+            style="?attr/borderlessButtonStyle"
+            android:textColor="@color/pacific"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Your Swimming Ability"
+            android:textColor="@color/deep_ocean"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Step 2: Choose your skill level to instantly rank the top 3 best matching beaches."
+            android:textColor="@color/reef"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 3 Swimmer Level Selection Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:id="@+id/btnLevelBeginner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Beginner"
+                android:textSize="13sp"
+                android:backgroundTint="@color/safe_green"
+                android:textColor="@color/white"
+                android:layout_marginEnd="4dp" />
+
+            <Button
+                android:id="@+id/btnLevelIntermediate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Intermediate"
+                android:textSize="12sp"
+                android:backgroundTint="@color/caution_yellow"
+                android:textColor="@color/deep_ocean"
+                android:layout_marginEnd="4dp" />
+
+            <Button
+                android:id="@+id/btnLevelAdvanced"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Advanced"
+                android:textSize="13sp"
+                android:backgroundTint="@color/danger_red"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvResultsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Top 3 Ranked Beaches for You:"
+            android:textColor="@color/deep_ocean"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone" />
+
+        <!-- Results ListView for Top 3 Beaches -->
+        <ListView
+            android:id="@+id/listViewTopThree"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:divider="@color/accent_blue"
+            android:dividerHeight="1dp"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Notice at the bottom -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Note: These top 3 beaches are ranked based on your selected amenities and swimmer ability level."
+            android:textColor="@color/reef"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:padding="8dp" />
+
+    </LinearLayout>
+</FrameLayout>

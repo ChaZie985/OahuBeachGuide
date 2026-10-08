@@ -1,0 +1,34 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="160dp"
+    android:viewportWidth="200"
+    android:viewportHeight="160">
+
+    <!-- Stylized Waves on Top -->
+    <path
+        android:fillColor="#1767B0"
+        android:pathData="M20,45 Q60,15 100,35 Q140,55 180,30 Q165,60 100,55 Q60,50 20,45 Z" />
+    <path
+        android:fillColor="#0077B6"
+        android:pathData="M30,55 Q70,30 110,48 Q150,66 175,50 Q150,72 110,65 Q70,60 30,55 Z" />
+    <path
+        android:fillColor="#2A9BD6"
+        android:pathData="M45,64 Q80,45 120,58 Q160,71 168,62 Q145,78 115,73 Q80,69 45,64 Z" />
+
+    <!-- Text: O B G -->
+    <!-- O -->
+    <path
+        android:fillColor="#0A2342"
+        android:pathData="M30,115 C30,95 45,90 60,90 C75,90 90,95 90,115 C90,135 75,140 60,140 C45,140 30,135 30,115 Z M48,115 C48,105 52,102 60,102 C68,102 72,105 72,115 C72,125 68,128 60,128 C52,128 48,125 48,115 Z" />
+
+    <!-- B -->
+    <path
+        android:fillColor="#1767B0"
+        android:pathData="M100,90 L122,90 C135,90 143,96 143,104 C143,110 137,114 130,116 C138,118 145,123 145,131 C145,139 135,140 122,140 L100,140 Z M116,100 L116,108 L124,108 C128,108 130,106 130,104 C130,102 128,100 124,100 Z M116,120 L116,130 L126,130 C130,130 132,128 132,125 C132,122 130,120 126,120 Z" />
+
+    <!-- G -->
+    <path
+        android:fillColor="#0077B6"
+        android:pathData="M155,115 C155,95 170,90 185,90 C200,90 215,95 215,115 L215,118 L185,118 L185,110 L200,110 C200,104 195,102 185,102 C175,102 170,106 170,115 C170,124 175,128 185,128 C192,128 198,125 200,120 L213,126 C207,137 197,140 185,140 C170,140 155,135 155,115 Z" />
+
+</vector>

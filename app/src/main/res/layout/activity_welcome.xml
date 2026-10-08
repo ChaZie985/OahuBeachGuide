@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/black">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black">
+
+        <!-- Top Corner Language Switcher Button -->
+        <Button
+            android:id="@+id/btnSwitchLanguage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:layout_margin="16dp"
+            android:text="🌐 Language"
+            android:textSize="12sp"
+            style="?attr/borderlessButtonStyle"
+            android:textColor="@color/accent_blue"
+            android:elevation="4dp"
+            android:translationZ="4dp" />
+
+        <!-- Main Dashboard Content -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="64dp"
+            android:paddingBottom="36dp">
+
+            <ImageView
+                android:layout_width="140dp"
+                android:layout_height="100dp"
+                android:layout_marginBottom="12dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/glossy_obg_logo"
+                android:contentDescription="App Logo" />
+
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Welcome to the\nOahu Beach Guide"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="28dp" />
+
+            <!-- Stacked Full-Width Buttons (Larger size and increased spacing) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnViewMap"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginBottom="24dp"
+                android:text="Explore Map"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                app:backgroundTint="@color/primary_blue"
+                android:textColor="@color/white"
+                app:cornerRadius="0dp"
+                app:strokeColor="@color/darker_gray"
+                app:strokeWidth="5dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSearchBeaches"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginBottom="24dp"
+                android:text="Search Beaches"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                app:backgroundTint="@color/light_green"
+                android:textColor="@color/white"
+                app:cornerRadius="0dp"
+                app:strokeColor="@color/darker_gray"
+                app:strokeWidth="5dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRecommendations"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginBottom="24dp"
+                android:text="Safe Recommendations"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                app:backgroundTint="@color/primary_blue"
+                android:textColor="@color/white"
+                app:cornerRadius="0dp"
+                app:strokeColor="@color/darker_gray"
+                app:strokeWidth="5dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAmenitySearch"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:gravity="center"
+                android:text="Search Amenities"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/light_green"
+                app:cornerRadius="0dp"
+                app:strokeColor="@color/darker_gray"
+                app:strokeWidth="5dp" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+</ScrollView>

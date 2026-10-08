@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:paddingTop="56dp">
+
+        <!-- Back Button Box -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/light_green">
+
+            <Button
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="← Back"
+                style="?attr/borderlessButtonStyle"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Title & Explanation Box -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/primary_blue">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tvAmenitiesTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Search by Amenities"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/tvAmenitiesSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select amenities at the top, then click submit to see your top 4 matching safe beaches below."
+                    android:textColor="@color/accent_blue"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- TOP SECTION: Checkboxes Box -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/primary_dark_blue">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <CheckBox
+                    android:id="@+id/chkRestrooms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Restrooms"
+                    android:textSize="14sp"
+                    android:textColor="@color/white" />
+
+                <CheckBox
+                    android:id="@+id/chkShowers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Showers"
+                    android:textSize="14sp"
+                    android:textColor="@color/white" />
+
+                <CheckBox
+                    android:id="@+id/chkParking"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Parking"
+                    android:textSize="14sp"
+                    android:textColor="@color/white" />
+
+                <CheckBox
+                    android:id="@+id/chkLifeguard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lifeguard Tower"
+                    android:textSize="14sp"
+                    android:textColor="@color/white" />
+
+                <CheckBox
+                    android:id="@+id/chkPicnic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Picnic Areas"
+                    android:textSize="14sp"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Submit Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSubmitAmenities"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:text="Find Matching Safe Beaches"
+            app:backgroundTint="@color/darker_gray"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            app:cornerRadius="0dp"
+            app:strokeColor="@color/primary_blue"
+            app:strokeWidth="5dp"
+            android:layout_marginBottom="12dp" />
+
+        <!-- BOTTOM SECTION: Top Four Blue & Green Boxes Stacked -->
+        <TextView
+            android:id="@+id/tvResultsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Top 4 Safe Matching Beaches:"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:id="@+id/containerTopFour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:paddingBottom="12dp">
+
+                <!-- Dynamically populated boxes -->
+
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- Disclaimer Box at the bottom -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/light_green">
+
+            <TextView
+                android:id="@+id/tvAmenitiesDisclaimer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Note: Only safe beaches are shown. These are matched directly based on your selected amenities."
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:padding="10dp" />
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+</FrameLayout>

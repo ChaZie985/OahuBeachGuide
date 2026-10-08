@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="ultra_light_gray">#F5F5F5</color>
+    <color name="darker_gray">#D1D5DB</color>
+
+    <!-- Primary Theme Colors (Blue and Green) -->
+    <color name="primary_blue">#0077B6</color>
+    <color name="primary_dark_blue">#003049</color>
+    <color name="primary_green">#2D6A4F</color>
+    <color name="secondary_green">#52B788</color>
+    <color name="accent_blue">#ADE8F4</color>
+    <color name="background_light">#F8F9FA</color>
+    <color name="text_dark">#212529</color>
+    <color name="error_red">#D62828</color>
+
+    <!-- Design System Tokens -->
+    <color name="deep_ocean">#0A2342</color>
+    <color name="reef">#12406B</color>
+    <color name="pacific">#1767B0</color>
+    <color name="lagoon">#2A9BD6</color>
+    <color name="seafoam">#EAF6FC</color>
+    <color name="foam">#FFFFFF</color>
+    <color name="danger_red">#D3263A</color>
+    <color name="safe_green">#1B9E5A</color>
+    <color name="caution_yellow">#F4B400</color>
+    <color name="light_green">#66BB6A</color>
+</resources>

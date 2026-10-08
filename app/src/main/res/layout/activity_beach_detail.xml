@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- 1. Alert Strip (Official closures / High Surf Warnings) -->
+        <LinearLayout
+            android:id="@+id/alertStrip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/error_red"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:visibility="gone"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_dialog_alert"
+                app:tint="@color/white"
+                android:contentDescription="Alert Icon"/>
+            <TextView
+                android:id="@+id/tvAlertText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="High Surf Advisory: East shores."
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- 2. Header & Navigation Bar -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="@color/black">
+
+            <!-- Back Button in Blue -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/primary_blue">
+
+                <Button
+                    android:id="@+id/btnBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="← Back"
+                    style="?attr/borderlessButtonStyle"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </androidx.cardview.widget.CardView>
+
+            <!-- Fixed Emergency [SOS] Button Top Right -->
+            <Button
+                android:id="@+id/btnEmergency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SOS 911"
+                android:backgroundTint="@color/error_red"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+
+        <!-- Scrollable Content -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Beach Title, Hawaiian Name & Show on Map Button -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_alignParentStart="true"
+                        android:layout_toStartOf="@id/btnShowOnMap"
+                        android:layout_centerVertical="true">
+
+                        <TextView
+                            android:id="@+id/tvBeachName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sandy Beach"
+                            android:textColor="@color/white"
+                            android:textSize="26sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvHawaiianName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Wāwāmalu · Southeast shore"
+                            android:textColor="@color/accent_blue"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnShowOnMap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="8dp"
+                        android:text="Show me on map"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:backgroundTint="@color/primary_blue"
+                        android:textColor="@color/white"
+                        app:cornerRadius="8dp" />
+                </RelativeLayout>
+
+                <!-- 2.5. About this Beach -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/foam">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/lblAboutThisBeach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="About this beach"
+                            android:textColor="@color/text_dark"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_marginBottom="6dp" />
+
+                        <TextView
+                            android:id="@+id/tvBeachDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Environment sentence. Safety sentence. Known for sentence."
+                            android:textColor="@color/text_dark"
+                            android:textSize="14sp"
+                            android:lineSpacingExtra="4dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 2.6. Address & Coordinates Box (Tap to Navigate) -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardAddressBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/lagoon"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/lblBeachAddressNav"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="📍 Beach Address &amp; Navigation"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:id="@+id/tvBeachAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Beach Name, Oʻahu, HI"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:layout_marginBottom="2dp" />
+
+                        <TextView
+                            android:id="@+id/tvBeachCoordinates"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Coordinates: 21.0000, -157.0000 (Tap to open in Google Maps)"
+                            android:textColor="@color/accent_blue"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 3. Today's Verdict Section -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/foam">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/tvVerdictBadge"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="▲ Dangerous today"
+                            android:textColor="@color/white"
+                            android:background="@color/danger_red"
+                            android:padding="12dp"
+                            android:textStyle="bold"
+                            android:textSize="18sp"
+                            android:gravity="center"
+                            android:layout_marginBottom="12dp" />
+
+                        <TextView
+                            android:id="@+id/tvVerdictReason"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="6–8 ft shorebreak and a High Surf Advisory for east shores."
+                            android:textColor="@color/text_dark"
+                            android:textSize="16sp"
+                            android:layout_marginBottom="16dp" />
+
+                        <TextView
+                            android:id="@+id/tvFreshness"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Updated 14 minutes ago."
+                            android:textColor="@color/reef"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 4. Safer Options Nearby (Shown when Caution / Dangerous / Closed) -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardSaferOptions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/foam">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/lblSaferOptions"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Safer options nearby"
+                            android:textColor="@color/text_dark"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:id="@+id/tvSaferOptionsList"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="• Waimānalo Bay (15 min) — Calmer today, lifeguards on duty.\n• Hanauma Bay (8 min) — Protected marine life conservation area."
+                            android:textColor="@color/text_dark"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 5. Today's Conditions -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/foam">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/lblTodaysConditions"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Today's conditions"
+                            android:textColor="@color/text_dark"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_marginBottom="12dp" />
+
+                        <TextView
+                            android:id="@+id/tvWaveHeight"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Wave height: Large, 6–8 ft (Rising)"
+                            android:textColor="@color/text_dark"
+                            android:textSize="14sp"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:id="@+id/tvWindCondition"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Wind: 15 mph ENE (Strong onshore wind, choppy water)"
+                            android:textColor="@color/text_dark"
+                            android:textSize="14sp"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:id="@+id/tvTideInfo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Tide: +1.6 ft (High at 2:15 PM, Low at 8:30 PM)"
+                            android:textColor="@color/text_dark"
+                            android:textSize="14sp"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:id="@+id/tvLifeguardStatus"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Lifeguard: On duty now (Tower #1)"
+                            android:textColor="@color/text_dark"
+                            android:textSize="14sp"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:id="@+id/tvWaterQuality"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Water quality: No advisories"
+                            android:textColor="@color/text_dark"
+                            android:textSize="14sp"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:id="@+id/tvUvAndJellyfish"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="UV Index: 11 (Extreme) · Reef-safe sunscreen recommended"
+                            android:textColor="@color/text_dark"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 6. Hazards & Local Knowledge -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/foam">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/lblHazards"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hazards at this beach"
+                            android:textColor="@color/text_dark"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:id="@+id/tvPermanentHazards"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="• Shorebreak: Waves break directly on the sand; serious neck and back injuries happen here even on small days.\n• Rip currents: Strong backwash pulls swimmers out."
+                            android:textColor="@color/text_dark"
+                            android:textSize="14sp"
+                            android:layout_marginBottom="12dp" />
+
+                        <TextView
+                            android:id="@+id/lblLocalsKnow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="What locals know"
+                            android:textColor="@color/primary_blue"
+                            android:textStyle="bold"
+                            android:textSize="14sp"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:id="@+id/tvLocalKnowledge"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="“Looks inviting from the parking lot. Watch from the sand unless you are an experienced bodysurfer.”"
+                            android:textColor="@color/text_dark"
+                            android:textSize="14sp"
+                            android:textStyle="italic" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 7. Who it's good for -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/foam">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/lblGoodFor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Who it's good for"
+                            android:textColor="@color/text_dark"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:id="@+id/tvGoodFor"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="• Good for: Watching, experienced bodysurfers\n• Not good for: Young kids, beginner swimmers"
+                            android:textColor="@color/text_dark"
+                            android:textSize="14sp"
+                            android:layout_marginBottom="8dp" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- 8 & 9. Amenities & Wildlife / Mālama ʻĀina -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/foam">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/lblAmenitiesWildlife"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Amenities &amp; Wildlife"
+                            android:textColor="@color/text_dark"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:id="@+id/tvAmenities"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="• Amenities: Restrooms, showers, parking\n• Accessibility: Paved path to the sand"
+                            android:textColor="@color/text_dark"
+                            android:textSize="14sp"
+                            android:layout_marginBottom="12dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Mālama ʻāina: Stay 10 ft away from sea turtles and 50 ft from Hawaiian monk seals. Pack out your trash and protect the reef."
+                            android:textColor="@color/primary_green"
+                            android:textSize="13sp" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <!-- 10. Emergency Sheet Modal (Opened from SOS button) -->
+    <LinearLayout
+        android:id="@+id/emergencySheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EMERGENCY ASSISTANCE"
+            android:textColor="@color/error_red"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnCall911"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="CALL 911 NOW"
+            android:backgroundTint="@color/error_red"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:id="@+id/tvEmergencyLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Location: Sandy Beach (Wāwāmalu)\nCoordinates: 21.2825, -157.6583"
+            android:textColor="@color/deep_ocean"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Quick First Aid Steps:\n• Rip current: Swim parallel to shore, nimble/safe emergency care."
+            android:textColor="@color/deep_ocean"
+            android:textSize="14sp"
+            android:layout_marginBottom="24dp" />
+
+        <Button
+            android:id="@+id/btnCloseEmergency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Close Emergency View"
+            android:backgroundTint="@color/pacific"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
