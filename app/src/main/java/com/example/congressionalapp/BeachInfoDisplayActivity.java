@@ -11,12 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import java.util.Locale;
 
-/**
- * ACTIVITY: BeachInfoDisplayActivity
- * 
- * Public-safety beach information screen for Oʻahu beaches. Fully localized for English, Spanish, Japanese, Korean, and Chinese.
- * Renders verified hazard data, freshness indicators, overall safety verdicts, safer alternatives, and emergency tools.
- */
 public class BeachInfoDisplayActivity extends AppCompatActivity {
 
     private BeachLocation currentBeach;
@@ -55,7 +49,7 @@ public class BeachInfoDisplayActivity extends AppCompatActivity {
 
         BeachLocation beach = (BeachLocation) getIntent().getSerializableExtra("BEACH");
         if (beach == null) {
-            beach = BeachRepository.getSampleBeaches().get(0); // Default to Sandy Beach
+            beach = BeachRepository.getSampleBeaches().get(0);
         }
         currentBeach = beach;
 
@@ -110,7 +104,6 @@ public class BeachInfoDisplayActivity extends AppCompatActivity {
         tvGoodFor.setText(AppLocalization.getLocalizedGoodFor(this, beach));
         tvAmenities.setText(AppLocalization.getLocalizedAmenities(this, beach));
 
-        // Localized Card Headers
         TextView lblAboutThisBeach = findViewById(R.id.lblAboutThisBeach);
         if (lblAboutThisBeach != null) lblAboutThisBeach.setText(AppLocalization.get(this, "about_this_beach"));
 
@@ -142,7 +135,6 @@ public class BeachInfoDisplayActivity extends AppCompatActivity {
 
         tvFreshness.setText(AppLocalization.get(this, "freshness_text"));
 
-        // Show official alert if Sandy Beach or Sunset Beach
         if ("sandy-beach".equals(beach.getId()) || "sunset-beach".equals(beach.getId())) {
             alertStrip.setVisibility(View.VISIBLE);
         } else {
@@ -165,12 +157,18 @@ public class BeachInfoDisplayActivity extends AppCompatActivity {
                         actualShoreHeight = offshoreHeight * 0.35f;
                     }
 
-                    tvWaveHeight.setText(String.format(Locale.US, "Wave height: Large, %.1f–%.1f ft (Rising)", actualShoreHeight, actualShoreHeight + 2f));
-                    tvWindCondition.setText(AppLocalization.get(BeachInfoDisplayActivity.this, "wind_text"));
-                    tvTideInfo.setText(AppLocalization.get(BeachInfoDisplayActivity.this, "tide_text"));
+                    float windMph = data.getWindSpeedMph();
+                    String windDir = getCardinalDirection(data.getWindDirectionDeg());
+                    float uv = data.getUvIndex();
+                    String uvCat = getUvCategory(uv);
+                    float tide = data.getTideFeet();
+
+                    tvWaveHeight.setText(String.format(Locale.US, "Wave height: %.1f–%.1f ft", actualShoreHeight, actualShoreHeight + 1.5f));
+                    tvWindCondition.setText(String.format(Locale.US, "Wind: %.1f mph %s (Live onshore wind)", windMph, windDir));
+                    tvTideInfo.setText(String.format(Locale.US, "Tide: %+.1f ft (Live tidal level)", tide));
                     tvLifeguardStatus.setText(AppLocalization.get(BeachInfoDisplayActivity.this, "lifeguard_text"));
                     tvWaterQuality.setText(AppLocalization.get(BeachInfoDisplayActivity.this, "water_quality_text"));
-                    tvUvAndJellyfish.setText(AppLocalization.get(BeachInfoDisplayActivity.this, "uv_text"));
+                    tvUvAndJellyfish.setText(String.format(Locale.US, "UV Index: %.1f (%s) · Reef-safe sunscreen recommended", uv, uvCat));
 
                     evaluateGeneralVerdict(beach);
                 });
@@ -186,6 +184,21 @@ public class BeachInfoDisplayActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private static String getCardinalDirection(float degrees) {
+        String[] directions = {"N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"};
+        int index = Math.round(degrees / 22.5f) % 16;
+        if (index < 0) index += 16;
+        return directions[index];
+    }
+
+    private static String getUvCategory(float uv) {
+        if (uv <= 2) return "Low";
+        if (uv <= 5) return "Moderate";
+        if (uv <= 7) return "High";
+        if (uv <= 10) return "Very High";
+        return "Extreme";
     }
 
     private void evaluateGeneralVerdict(BeachLocation beach) {
@@ -232,7 +245,6 @@ public class BeachInfoDisplayActivity extends AppCompatActivity {
             });
         }
 
-        // Emergency SOS Button
         Button btnEmergency = findViewById(R.id.btnEmergency);
         btnEmergency.setOnClickListener(v -> {
             tvEmergencyLocation.setText("Location: " + currentBeach.getName() + " (" + currentBeach.getHawaiianName() + ")\nCoordinates: " + currentBeach.getLatitude() + ", " + currentBeach.getLongitude());

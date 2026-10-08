@@ -9,13 +9,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
-/**
- * ACTIVITY: UserLevelSettingsActivity
- * 
- * Provides a UI for users to define their experience level. 
- * Although currently minimized for the tourist-centric version of the app, 
- * this activity allows for future extensibility into expert-level conditions.
- */
 public class UserLevelSettingsActivity extends AppCompatActivity {
 
     private int experienceLevel = 1;

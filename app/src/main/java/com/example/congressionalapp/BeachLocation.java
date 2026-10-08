@@ -3,12 +3,6 @@ package com.example.congressionalapp;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * DATA MODEL: BeachLocation
- * 
- * Represents a specific beach location on Oʻahu with public-safety metadata,
- * permanent hazards, Hawaiian names with diacritics, 3-sentence descriptions, and coastal characteristics.
- */
 public class BeachLocation implements Serializable {
     private final String id;
     private final String name;

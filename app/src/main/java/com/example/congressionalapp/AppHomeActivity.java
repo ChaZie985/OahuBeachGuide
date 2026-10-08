@@ -14,13 +14,6 @@ import androidx.work.WorkManager;
 
 import java.util.concurrent.TimeUnit;
 
-/**
- * ACTIVITY: AppHomeActivity
- * 
- * The central dashboard and entry point of the application. 
- * This activity handles initial permissions setup (Notifications/Location) 
- * and initializes the background safety monitoring service.
- */
 public class AppHomeActivity extends AppCompatActivity {
 
     @Override
@@ -28,10 +21,8 @@ public class AppHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        // Start background safety monitoring
         initializeBackgroundSafetyMonitor();
 
-        // Request notification permission for Android 13+ (Required for background alerts)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
         }
@@ -84,10 +75,6 @@ public class AppHomeActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Schedules a recurring background check to notify the user if they enter
-     * a dangerous surf zone.
-     */
     private void initializeBackgroundSafetyMonitor() {
         PeriodicWorkRequest safetyRequest =
                 new PeriodicWorkRequest.Builder(ProximitySafetyWorker.class, 1, TimeUnit.HOURS)

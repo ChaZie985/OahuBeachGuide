@@ -3,15 +3,9 @@ package com.example.congressionalapp;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-/**
- * MANAGER: AppLocalization
- * 
- * Manages app-wide language state (English, Spanish, Japanese, Korean, Chinese) and provides
- * comprehensive localized translations for all UI text, card headings, safety verdicts, beach hazards, and conditions.
- */
 public class AppLocalization {
     private static final String PREF_NAME = "AppLangPref";
-    private static final String KEY_LANG = "selected_language"; // "en", "es", "ja", "ko", "zh"
+    private static final String KEY_LANG = "selected_language";
 
     public static void setLanguage(Context context, String langCode) {
         SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);

@@ -21,13 +21,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.List;
 
-/**
- * ACTIVITY: InteractiveMapActivity
- * 
- * Visualizes beach locations using the Google Maps SDK. 
- * Tracks and displays the user's live GPS location on the map, and allows tapping
- * markers to view safety and wave height details.
- */
 public class InteractiveMapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -80,7 +73,6 @@ public class InteractiveMapActivity extends AppCompatActivity implements OnMapRe
             }
             enableUserLocationOnMap(false);
         } else {
-            // Check location permission and enable live user location tracking layer
             enableUserLocationOnMap(true);
         }
 
@@ -101,7 +93,6 @@ public class InteractiveMapActivity extends AppCompatActivity implements OnMapRe
             if (mMap != null) {
                 mMap.setMyLocationEnabled(true);
                 if (centerOnUser) {
-                    // Center on user's live location if available, otherwise Oʻahu
                     fusedLocationClient.getLastLocation().addOnSuccessListener(this, location -> {
                         if (location != null) {
                             LatLng userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
@@ -116,7 +107,6 @@ public class InteractiveMapActivity extends AppCompatActivity implements OnMapRe
         } else {
             if (centerOnUser) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
-                // Default center on Oʻahu
                 if (mMap != null) {
                     LatLng oahu = new LatLng(21.4389, -158.0001);
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(oahu, 10));

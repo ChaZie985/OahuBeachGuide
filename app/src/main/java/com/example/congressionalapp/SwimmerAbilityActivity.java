@@ -12,12 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * ACTIVITY: SwimmerAbilityActivity
- * 
- * Step 2 of Amenity & Skill Search: Users select their swimmer ability level (Beginner, Intermediate, Advanced),
- * and the app computes and displays the top 3 best matching Oʻahu beaches tailored to that skill level and amenities.
- */
 public class SwimmerAbilityActivity extends AppCompatActivity {
 
     private ArrayList<String> selectedAmenities;
@@ -90,7 +84,7 @@ public class SwimmerAbilityActivity extends AppCompatActivity {
             int skillScore = 0;
             if (skillLevel.equals("Beginner")) {
                 if (isHighRisk) {
-                    continue; // Beginners should never be recommended high-risk shores like Sandy or Sunset
+                    continue;
                 }
                 if (isProtectedOrCalm) {
                     skillScore += 10;
@@ -99,7 +93,7 @@ public class SwimmerAbilityActivity extends AppCompatActivity {
                 }
             } else if (skillLevel.equals("Intermediate")) {
                 if ("sandy-beach".equals(beachId) || "sunset-beach".equals(beachId)) {
-                    continue; // Skip extreme expert shores for intermediates
+                    continue;
                 }
                 if (!isHighRisk) {
                     skillScore += 8;
@@ -108,13 +102,12 @@ public class SwimmerAbilityActivity extends AppCompatActivity {
                 }
             } else if (skillLevel.equals("Advanced")) {
                 if (isHighRisk || beach.getPermanentHazards().toLowerCase().contains("shorebreak") || beach.getPermanentHazards().toLowerCase().contains("surf")) {
-                    skillScore += 10; // Heavily reward advanced surf & shorebreak spots
+                    skillScore += 10;
                 } else {
                     skillScore += 4;
                 }
             }
 
-            // Amenity score calculation
             int amenityScore = 0;
             List<String> beachAmenities = beach.getAmenities();
             for (String req : selectedAmenities) {
@@ -132,10 +125,8 @@ public class SwimmerAbilityActivity extends AppCompatActivity {
             }
         }
 
-        // Sort by total composite score descending
         scoredBeaches.sort((b1, b2) -> Integer.compare(b2.score, b1.score));
 
-        // Take top 3
         int count = Math.min(3, scoredBeaches.size());
         for (int i = 0; i < count; i++) {
             BeachScoreItem item = scoredBeaches.get(i);

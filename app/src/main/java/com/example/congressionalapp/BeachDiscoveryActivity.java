@@ -18,12 +18,6 @@ import com.google.android.material.card.MaterialCardView;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * ACTIVITY: BeachDiscoveryActivity
- * 
- * Provides a searchable list of all beach locations with ultra light gray background,
- * black lettering, and alternating blue and green borders.
- */
 public class BeachDiscoveryActivity extends AppCompatActivity {
 
     private List<BeachLocation> beachList;
@@ -113,7 +107,6 @@ public class BeachDiscoveryActivity extends AppCompatActivity {
 
                 card.setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.darker_gray));
 
-                // Alternate between blue and green borders
                 if (position % 2 == 0) {
                     card.setStrokeColor(ContextCompat.getColor(getContext(), R.color.primary_blue));
                 } else {

@@ -16,18 +16,10 @@ import com.google.android.gms.location.LocationServices;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * BACKGROUND WORKER: ProximitySafetyWorker
- * 
- * This background task runs periodically to check if the user is physically near
- * a dangerous beach. It fetches the user's last known location, finds the nearest 
- * beach, checks its live wave height, and sends a system notification if conditions 
- * are hazardous for beginners.
- */
 public class ProximitySafetyWorker extends Worker {
 
     private static final String CHANNEL_ID = "BEACH_SAFETY_ALERTS";
-    private static final float PROXIMITY_RADIUS_MILES = 1.0f; // Alert range
+    private static final float PROXIMITY_RADIUS_MILES = 1.0f;
 
     public ProximitySafetyWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
@@ -69,7 +61,6 @@ public class ProximitySafetyWorker extends Worker {
                         float heightFeet = data.getHeightFeet();
                         float actualShoreHeight = heightFeet;
                         
-                        // Apply shore break reduction logic
                         if (beach.isReefProtected()) {
                             actualShoreHeight = heightFeet * 0.1f;
                             if (actualShoreHeight > 1.0f) actualShoreHeight = 1.0f;
@@ -77,7 +68,6 @@ public class ProximitySafetyWorker extends Worker {
                             actualShoreHeight = heightFeet * 0.35f;
                         }
 
-                        // Hazard detection: Trigger alert if shore break is high at an unprotected spot
                         if (!beach.isReefProtected() && !beach.isBreaksFarOut() && actualShoreHeight >= 2.5f) {
                             dispatchNotification(beach.getName(), actualShoreHeight);
                         }
@@ -85,7 +75,6 @@ public class ProximitySafetyWorker extends Worker {
 
                     @Override
                     public void onError(String errorMessage) {
-                        // Suppress background errors
                     }
                 });
             }

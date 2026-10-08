@@ -3,18 +3,10 @@ package com.example.congressionalapp;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * REPOSITORY: BeachRepository
- * 
- * Provides verified records for 100 Oʻahu beaches across all shores (South, Southeast, Windward, North, Leeward),
- * featuring official hazard descriptions, Hawaiian diacritics, GPS coordinates,
- * coastal wave profiles, amenity mappings, and 3-sentence structured descriptions.
- */
 public class BeachRepository {
 
     public static List<BeachLocation> getSampleBeaches() {
         return Arrays.asList(
-            // --- SOUTH SHORE ---
             new BeachLocation(
                 "duke-kahanamoku-beach",
                 "Duke Kahanamoku Beach",
@@ -270,8 +262,6 @@ public class BeachRepository {
                 Arrays.asList("Hawaii Beach Safety"),
                 "A rugged coastal strip located near the Black Point headland with dark volcanic rock shelves. It is unsafe for swimming due to heavy wave surge against jagged lava. It is known for tidepooling and dramatic ocean spray photography."
             ),
-
-            // --- LEEWARD SHORE ---
             new BeachLocation(
                 "oneula-beach",
                 "Oneʻula Beach",
@@ -647,8 +637,6 @@ public class BeachRepository {
                 Arrays.asList("Hawaii Beach Safety", "DLNR State Parks"),
                 "A protected state park encompassing the dramatic northwestern tip where the Waiʻanae and Koʻolau ranges almost meet. The coastal waters are extremely dangerous and unsafe for swimming. It is renowned for its sacred Hawaiian cultural significance and thriving seabird sanctuary."
             ),
-
-            // --- SOUTHEAST SHORE ---
             new BeachLocation(
                 "halona-beach-cove",
                 "Hālona Beach Cove",
@@ -709,8 +697,6 @@ public class BeachRepository {
                 Arrays.asList("Hawaii Beach Safety", "Honolulu Ocean Safety"),
                 "A wide golden-sand beach exposed to strong southeastern trade winds and powerful incoming swells. It is notoriously dangerous for swimming due to violent shorebreaks that cause frequent spinal injuries. It is world-renowned as Oʻahu's premier and most aggressive bodysurfing beach."
             ),
-
-            // --- WINDWARD SHORE ---
             new BeachLocation(
                 "waimanalo-beach",
                 "Waimānalo Beach",
@@ -1056,8 +1042,6 @@ public class BeachRepository {
                 Arrays.asList("Hawaii Beach Safety", "Hawaii State Parks"),
                 "A premier state park offering wooded beach campsites and eco-cabins along the picturesque bay. It is safe for swimming and kayaking when trade winds are calm. It is renowned as Oʻahu's top destination for immersive coastal camping experiences."
             ),
-
-            // --- NORTH SHORE ---
             new BeachLocation(
                 "moku-ia",
                 "Mokuʻauia (Goat Island)",

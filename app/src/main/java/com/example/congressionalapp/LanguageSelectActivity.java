@@ -7,12 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.os.LocaleListCompat;
 
-/**
- * ACTIVITY: LanguageSelectActivity
- * 
- * Startup screen displayed on every app launch, allowing the user to select
- * between English, Spanish, Japanese, Korean, and Chinese for the entire application.
- */
 public class LanguageSelectActivity extends AppCompatActivity {
 
     @Override

@@ -10,13 +10,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 import java.io.IOException;
 
-/**
- * IMPLEMENTATION: PacIoosWaveProvider
- * 
- * Fetches high-resolution nearshore wave model data from PacIOOS (University of Hawaii).
- * It uses the ERDDAP protocol to retrieve the latest modeled wave face heights
- * specifically for the Hawaiian islands.
- */
 public class PacIoosWaveProvider implements WaveDataProvider {
     private final OkHttpClient client = new OkHttpClient();
 
@@ -31,7 +24,6 @@ public class PacIoosWaveProvider implements WaveDataProvider {
         double lat = beach.getLatitude();
         double lon = beach.getLongitude();
 
-        // ERDDAP URL Pattern for latest grid data
         String url = String.format(java.util.Locale.US, "https://pae-paha.pacioos.hawaii.edu/erddap/griddap/%s.json?shgt[(latest)][(%f):1:(%f)][(%f):1:(%f)],mper[(latest)][(%f):1:(%f)][(%f):1:(%f)],mdir[(latest)][(%f):1:(%f)][(%f):1:(%f)]",
                 dataset, lat, lat, lon, lon, lat, lat, lon, lon, lat, lat, lon, lon);
 

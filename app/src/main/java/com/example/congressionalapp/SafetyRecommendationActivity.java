@@ -36,12 +36,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * ACTIVITY: SafetyRecommendationActivity
- * 
- * Generates a ranked list of safe beaches tailored to tourists and families.
- * Fully localized for English, Spanish, Japanese, Korean, and Chinese.
- */
 public class SafetyRecommendationActivity extends AppCompatActivity {
 
     private ListView listView;
@@ -280,13 +274,13 @@ public class SafetyRecommendationActivity extends AppCompatActivity {
 
     private int getStatusColorCode(BeachLocation beach, float heightFeet) {
         if (beach.isReefProtected() || (beach.isBreaksFarOut() && heightFeet <= 3.0f)) {
-            return Color.rgb(0, 150, 0); // Green
+            return Color.rgb(0, 150, 0);
         } else if (heightFeet >= 2.5f) {
-            return Color.rgb(200, 0, 0); // Red
+            return Color.rgb(200, 0, 0);
         } else if (heightFeet <= 1.5f) {
-            return Color.rgb(0, 150, 0); // Green
+            return Color.rgb(0, 150, 0);
         } else {
-            return Color.rgb(255, 140, 0); // Orange
+            return Color.rgb(255, 140, 0);
         }
     }
 

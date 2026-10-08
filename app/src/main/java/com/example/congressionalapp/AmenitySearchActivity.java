@@ -16,14 +16,6 @@ import com.google.android.material.card.MaterialCardView;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * ACTIVITY: AmenitySearchActivity
- * 
- * Allows users to select desired beach amenities via checkboxes at the top,
- * and upon clicking submit, displays the top 4 safe matching beaches at the bottom
- * in styled card items with darker gray background, black text, and alternating blue/green borders.
- * Fully localized for English, Spanish, Japanese, Korean, and Chinese.
- */
 public class AmenitySearchActivity extends AppCompatActivity {
 
     private CheckBox chkRestrooms, chkShowers, chkParking, chkLifeguard, chkPicnic;
@@ -141,7 +133,6 @@ public class AmenitySearchActivity extends AppCompatActivity {
             
             card.setCardBackgroundColor(ContextCompat.getColor(this, R.color.darker_gray));
             
-            // Alternate between blue and green borders
             if (i % 2 == 0) {
                 card.setStrokeColor(ContextCompat.getColor(this, R.color.primary_blue));
             } else {
