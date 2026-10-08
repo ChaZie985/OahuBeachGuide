@@ -1,9 +1,0 @@
-- `[x]` Expand BeachLocation data model with Hawaiian names, hazards, and amenities
-- `[x]` Add 10 additional verified Oʻahu beaches across all shores in BeachRepository
-- `[x]` Implement continuous real-time GPS location tracking and safe beach filtering
-- `[x]` Create LanguageSelectActivity and activity_language_select.xml for language selection on startup
-- `[x]` Add top-corner language switch button to activity_welcome.xml and AppHomeActivity.java
-- `[x]` Implement AppLocalization manager for app-wide translation (English, Spanish, Japanese, Korean, Chinese)
-- `[x]` Localize **Safe Beaches Recommendations** screen (`SafetyRecommendationActivity.java` & `AppLocalization.java`):
-  - Titles, subtitles, live location statuses, safety badges, shore height labels, and distance units now dynamically translate into the user's selected language (Spanish, Japanese, Korean, or Chinese).
-- `[x]` Run gradle build and verify app compiles successfully
