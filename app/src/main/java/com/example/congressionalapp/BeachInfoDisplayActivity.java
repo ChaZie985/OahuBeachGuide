@@ -86,23 +86,38 @@ public class BeachInfoDisplayActivity extends AppCompatActivity {
 
     private void populateBeachData(BeachLocation beach) {
         tvBeachName.setText(beach.getName());
-        tvHawaiianName.setText(beach.getHawaiianName() + " · " + beach.getShoreline());
+        tvHawaiianName.setText(beach.getHawaiianName() + " · " + AppLocalization.getLocalizedShoreline(this, beach.getShoreline()));
         
         if (tvBeachDescription != null) {
             tvBeachDescription.setText(AppLocalization.getLocalizedDescription(this, beach));
         }
 
         if (tvBeachAddress != null) {
-            tvBeachAddress.setText(beach.getName() + " (" + beach.getHawaiianName() + "), " + beach.getShoreline() + " Coast, Oʻahu, HI");
+            tvBeachAddress.setText(beach.getName() + " (" + beach.getHawaiianName() + "), " + AppLocalization.getLocalizedShoreline(this, beach.getShoreline()) + ", Oʻahu, HI");
         }
         if (tvBeachCoordinates != null) {
-            tvBeachCoordinates.setText(String.format(Locale.US, "GPS: %.4f, %.4f (Tap for directions)", beach.getLatitude(), beach.getLongitude()));
+            tvBeachCoordinates.setText(String.format(Locale.US, "GPS: %.4f, %.4f (%s)", beach.getLatitude(), beach.getLongitude(), AppLocalization.get(this, "tap_for_directions")));
         }
         
         tvPermanentHazards.setText(AppLocalization.getLocalizedHazard(this, beach.getId()));
         tvLocalKnowledge.setText("“" + AppLocalization.getLocalizedLocalKnowledge(this, beach.getId()) + "”");
         tvGoodFor.setText(AppLocalization.getLocalizedGoodFor(this, beach));
         tvAmenities.setText(AppLocalization.getLocalizedAmenities(this, beach));
+
+        TextView tvSaferOptionsList = findViewById(R.id.tvSaferOptionsList);
+        if (tvSaferOptionsList != null) {
+            tvSaferOptionsList.setText(AppLocalization.getLocalizedSaferOptions(this, beach));
+        }
+
+        TextView tvMalama = findViewById(R.id.tvMalama);
+        if (tvMalama != null) {
+            tvMalama.setText(AppLocalization.get(this, "malama_text"));
+        }
+
+        Button btnBack = findViewById(R.id.btnBack);
+        if (btnBack != null) {
+            btnBack.setText("← " + AppLocalization.get(this, "back"));
+        }
 
         TextView lblAboutThisBeach = findViewById(R.id.lblAboutThisBeach);
         if (lblAboutThisBeach != null) lblAboutThisBeach.setText(AppLocalization.get(this, "about_this_beach"));
@@ -163,12 +178,12 @@ public class BeachInfoDisplayActivity extends AppCompatActivity {
                     String uvCat = getUvCategory(uv);
                     float tide = data.getTideFeet();
 
-                    tvWaveHeight.setText(String.format(Locale.US, "Wave height: %.1f–%.1f ft", actualShoreHeight, actualShoreHeight + 1.5f));
-                    tvWindCondition.setText(String.format(Locale.US, "Wind: %.1f mph %s (Live onshore wind)", windMph, windDir));
-                    tvTideInfo.setText(String.format(Locale.US, "Tide: %+.1f ft (Live tidal level)", tide));
+                    tvWaveHeight.setText(AppLocalization.getWaveHeightText(BeachInfoDisplayActivity.this, actualShoreHeight, actualShoreHeight + 1.5f));
+                    tvWindCondition.setText(AppLocalization.getWindText(BeachInfoDisplayActivity.this, windMph, windDir));
+                    tvTideInfo.setText(AppLocalization.getTideText(BeachInfoDisplayActivity.this, tide));
                     tvLifeguardStatus.setText(AppLocalization.get(BeachInfoDisplayActivity.this, "lifeguard_text"));
                     tvWaterQuality.setText(AppLocalization.get(BeachInfoDisplayActivity.this, "water_quality_text"));
-                    tvUvAndJellyfish.setText(String.format(Locale.US, "UV Index: %.1f (%s) · Reef-safe sunscreen recommended", uv, uvCat));
+                    tvUvAndJellyfish.setText(AppLocalization.getUvText(BeachInfoDisplayActivity.this, uv, uvCat));
 
                     evaluateGeneralVerdict(beach);
                 });
@@ -177,10 +192,10 @@ public class BeachInfoDisplayActivity extends AppCompatActivity {
             @Override
             public void onError(String message) {
                 runOnUiThread(() -> {
-                    tvWaveHeight.setText("Conditions unknown: Unable to fetch live surf data.");
-                    tvVerdictBadge.setText(AppLocalization.get(BeachInfoDisplayActivity.this, "status_caution") + " (Offline)");
+                    tvWaveHeight.setText(AppLocalization.get(BeachInfoDisplayActivity.this, "offline_wave_unknown"));
+                    tvVerdictBadge.setText(AppLocalization.get(BeachInfoDisplayActivity.this, "status_caution") + " (" + AppLocalization.get(BeachInfoDisplayActivity.this, "offline_label") + ")");
                     tvVerdictBadge.setBackgroundColor(ContextCompat.getColor(BeachInfoDisplayActivity.this, android.R.color.darker_gray));
-                    tvVerdictReason.setText("Surf data unavailable. Rating limited until network returns.");
+                    tvVerdictReason.setText(AppLocalization.get(BeachInfoDisplayActivity.this, "offline_verdict_reason"));
                 });
             }
         });
@@ -245,19 +260,41 @@ public class BeachInfoDisplayActivity extends AppCompatActivity {
             });
         }
 
+        TextView lblEmergencyAssistance = findViewById(R.id.lblEmergencyAssistance);
+        if (lblEmergencyAssistance != null) {
+            lblEmergencyAssistance.setText(AppLocalization.get(this, "emergency_assistance"));
+        }
+
+        TextView tvFirstAidSteps = findViewById(R.id.tvFirstAidSteps);
+        if (tvFirstAidSteps != null) {
+            tvFirstAidSteps.setText(AppLocalization.get(this, "first_aid_steps"));
+        }
+
         Button btnEmergency = findViewById(R.id.btnEmergency);
-        btnEmergency.setOnClickListener(v -> {
-            tvEmergencyLocation.setText("Location: " + currentBeach.getName() + " (" + currentBeach.getHawaiianName() + ")\nCoordinates: " + currentBeach.getLatitude() + ", " + currentBeach.getLongitude());
-            emergencySheet.setVisibility(View.VISIBLE);
-        });
+        if (btnEmergency != null) {
+            btnEmergency.setOnClickListener(v -> {
+                String locLabel = AppLocalization.get(this, "location_label");
+                String coordLabel = AppLocalization.get(this, "coordinates_label");
+                tvEmergencyLocation.setText(locLabel + currentBeach.getName() + " (" + currentBeach.getHawaiianName() + ")\n" + coordLabel + String.format(Locale.US, "%.4f, %.4f", currentBeach.getLatitude(), currentBeach.getLongitude()));
+                emergencySheet.setVisibility(View.VISIBLE);
+            });
+        }
 
-        findViewById(R.id.btnCloseEmergency).setOnClickListener(v -> emergencySheet.setVisibility(View.GONE));
+        Button btnCloseEmergency = findViewById(R.id.btnCloseEmergency);
+        if (btnCloseEmergency != null) {
+            btnCloseEmergency.setText(AppLocalization.get(this, "close_emergency"));
+            btnCloseEmergency.setOnClickListener(v -> emergencySheet.setVisibility(View.GONE));
+        }
 
-        findViewById(R.id.btnCall911).setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_DIAL);
-            intent.setData(Uri.parse("tel:911"));
-            startActivity(intent);
-        });
+        Button btnCall911 = findViewById(R.id.btnCall911);
+        if (btnCall911 != null) {
+            btnCall911.setText(AppLocalization.get(this, "call_911"));
+            btnCall911.setOnClickListener(v -> {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:911"));
+                startActivity(intent);
+            });
+        }
 
         View cardAddressBox = findViewById(R.id.cardAddressBox);
         if (cardAddressBox != null) {

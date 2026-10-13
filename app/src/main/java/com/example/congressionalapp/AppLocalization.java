@@ -2,6 +2,9 @@ package com.example.congressionalapp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class AppLocalization {
     private static final String PREF_NAME = "AppLangPref";
@@ -356,7 +359,7 @@ public class AppLocalization {
             case "amenities_wildlife": return "设施与野生动物";
             case "emergency_assistance": return "紧急救援";
             case "call_911": return "立即拨打 911";
-            case "close_emergency": return "Close Emergency View";
+            case "close_emergency": return "关闭紧急救援视图";
             case "sorted_by_proximity": return "按离您最近排序（距离）";
             case "status_safe": return "推荐（安全）";
             case "status_dangerous": return "危险（强浪）";
@@ -379,40 +382,176 @@ public class AppLocalization {
             case "first_aid_steps": return "急救步骤：\n• 离岸流：沿海岸平行游动。\n• 颈部/背部受伤：切勿移动伤者。\n• 水母蛰伤：用醋冲洗并刮除触须。";
             case "about_this_beach": return "关于此海滩";
             case "beach_address_navigation": return "📍 海滩地址与导航";
+            case "tap_for_directions": return "点击获取导航路线";
+            case "offline_wave_unknown": return "海况未知：无法获取实时冲浪数据。";
+            case "offline_verdict_reason": return "冲浪数据不可用。在恢复网络前评级受限。";
+            case "offline_label": return "离线";
             default: return key;
         }
+    }
+
+    public static String getWaveHeightText(Context context, float minFt, float maxFt) {
+        String lang = getLanguage(context);
+        switch (lang) {
+            case "es":
+                return String.format(Locale.US, "Altura de olas: %.1f–%.1f ft", minFt, maxFt);
+            case "fr":
+                return String.format(Locale.US, "Hauteur des vagues : %.1f–%.1f ft", minFt, maxFt);
+            case "ja":
+                return String.format(Locale.US, "波高: %.1f〜%.1f ft", minFt, maxFt);
+            case "ko":
+                return String.format(Locale.US, "파도 높이: %.1f–%.1f ft", minFt, maxFt);
+            case "zh":
+                return String.format(Locale.US, "浪高: %.1f–%.1f 英尺", minFt, maxFt);
+            default:
+                return String.format(Locale.US, "Wave height: %.1f–%.1f ft", minFt, maxFt);
+        }
+    }
+
+    public static String getWindText(Context context, float windMph, String windDir) {
+        String lang = getLanguage(context);
+        switch (lang) {
+            case "es":
+                return String.format(Locale.US, "Viento: %.1f mph %s (Viento directo en vivo)", windMph, windDir);
+            case "fr":
+                return String.format(Locale.US, "Vent : %.1f mph %s (Vent de mer en direct)", windMph, windDir);
+            case "ja":
+                return String.format(Locale.US, "風速: %.1f mph %s (リアルタイムオンショア)", windMph, windDir);
+            case "ko":
+                return String.format(Locale.US, "풍속: %.1f mph %s (실시간 온쇼어 바람)", windMph, windDir);
+            case "zh":
+                return String.format(Locale.US, "风速: %.1f mph %s (实时向岸风)", windMph, windDir);
+            default:
+                return String.format(Locale.US, "Wind: %.1f mph %s (Live onshore wind)", windMph, windDir);
+        }
+    }
+
+    public static String getTideText(Context context, float tide) {
+        String lang = getLanguage(context);
+        switch (lang) {
+            case "es":
+                return String.format(Locale.US, "Marea: %+.1f ft (Nivel de marea en vivo)", tide);
+            case "fr":
+                return String.format(Locale.US, "Marée : %+.1f ft (Niveau de marée en direct)", tide);
+            case "ja":
+                return String.format(Locale.US, "潮位: %+.1f ft (リアルタイム潮位)", tide);
+            case "ko":
+                return String.format(Locale.US, "조석: %+.1f ft (실시간 조위)", tide);
+            case "zh":
+                return String.format(Locale.US, "潮位: %+.1f 英尺 (实时潮位)", tide);
+            default:
+                return String.format(Locale.US, "Tide: %+.1f ft (Live tidal level)", tide);
+        }
+    }
+
+    public static String getUvText(Context context, float uv, String uvCat) {
+        String lang = getLanguage(context);
+        String translatedCat = translateUvCategory(lang, uvCat);
+        switch (lang) {
+            case "es":
+                return String.format(Locale.US, "Índice UV: %.1f (%s) · Se recomienda protector solar seguro para arrecifes", uv, translatedCat);
+            case "fr":
+                return String.format(Locale.US, "Indice UV : %.1f (%s) · Crème solaire respectueuse des récifs recommandée", uv, translatedCat);
+            case "ja":
+                return String.format(Locale.US, "UVインデックス: %.1f (%s) · サンゴ礁に優しい日焼け止めの使用を推奨", uv, translatedCat);
+            case "ko":
+                return String.format(Locale.US, "자외선 지수: %.1f (%s) · 산호초 보호 선크림 권장", uv, translatedCat);
+            case "zh":
+                return String.format(Locale.US, "紫外线指数: %.1f (%s) · 建议使用环保防晒霜", uv, translatedCat);
+            default:
+                return String.format(Locale.US, "UV Index: %.1f (%s) · Reef-safe sunscreen recommended", uv, translatedCat);
+        }
+    }
+
+    private static String translateUvCategory(String lang, String uvCat) {
+        if ("es".equals(lang)) {
+            if ("Low".equalsIgnoreCase(uvCat)) return "Bajo";
+            if ("Moderate".equalsIgnoreCase(uvCat)) return "Moderado";
+            if ("High".equalsIgnoreCase(uvCat)) return "Alto";
+            if ("Very High".equalsIgnoreCase(uvCat)) return "Muy Alto";
+            if ("Extreme".equalsIgnoreCase(uvCat)) return "Extremo";
+        } else if ("fr".equals(lang)) {
+            if ("Low".equalsIgnoreCase(uvCat)) return "Faible";
+            if ("Moderate".equalsIgnoreCase(uvCat)) return "Modéré";
+            if ("High".equalsIgnoreCase(uvCat)) return "Élevé";
+            if ("Very High".equalsIgnoreCase(uvCat)) return "Très Élevé";
+            if ("Extreme".equalsIgnoreCase(uvCat)) return "Extrême";
+        } else if ("ja".equals(lang)) {
+            if ("Low".equalsIgnoreCase(uvCat)) return "低";
+            if ("Moderate".equalsIgnoreCase(uvCat)) return "中度";
+            if ("High".equalsIgnoreCase(uvCat)) return "高";
+            if ("Very High".equalsIgnoreCase(uvCat)) return "非常に高い";
+            if ("Extreme".equalsIgnoreCase(uvCat)) return "極度";
+        } else if ("ko".equals(lang)) {
+            if ("Low".equalsIgnoreCase(uvCat)) return "낮음";
+            if ("Moderate".equalsIgnoreCase(uvCat)) return "보통";
+            if ("High".equalsIgnoreCase(uvCat)) return "높음";
+            if ("Very High".equalsIgnoreCase(uvCat)) return "매우 높음";
+            if ("Extreme".equalsIgnoreCase(uvCat)) return "위험";
+        } else if ("zh".equals(lang)) {
+            if ("Low".equalsIgnoreCase(uvCat)) return "低";
+            if ("Moderate".equalsIgnoreCase(uvCat)) return "中等";
+            if ("High".equalsIgnoreCase(uvCat)) return "高";
+            if ("Very High".equalsIgnoreCase(uvCat)) return "极高";
+            if ("Extreme".equalsIgnoreCase(uvCat)) return "强极";
+        }
+        return uvCat;
+    }
+
+    public static String getLocalizedShoreline(Context context, String shoreline) {
+        String lang = getLanguage(context);
+        if ("es".equals(lang)) return getSpanishShore(shoreline);
+        if ("fr".equals(lang)) return getFrenchShore(shoreline);
+        if ("ja".equals(lang)) return getJapaneseShore(shoreline);
+        if ("ko".equals(lang)) return getKoreanShore(shoreline);
+        if ("zh".equals(lang)) return getChineseShore(shoreline);
+        return shoreline;
+    }
+
+    public static String getLocalizedSaferOptions(Context context, BeachLocation beach) {
+        String lang = getLanguage(context);
+        if ("es".equals(lang)) return "• Waimānalo Bay (15 min) — Más tranquilo hoy, salvavidas de servicio.\n• Hanauma Bay (8 min) — Área protegida de conservación marina.";
+        if ("fr".equals(lang)) return "• Waimānalo Bay (15 min) — Plus calme aujourd'hui, sauveteurs en service.\n• Hanauma Bay (8 min) — Zone protégée de conservation marine.";
+        if ("ja".equals(lang)) return "• ワイマナロベイ (15分) — 本日は比較的一穏やか、ライフガード常駐。\n• ハナウマベイ (8分) — 保護された海洋生物保全区域。";
+        if ("ko".equals(lang)) return "• 와이마날로 베이 (15분) — 오늘 상대적으로 잔잔함, 안전요원 근무 중.\n• 하나우마 베이 (8분) — 보호된 해양 생물 보전 구역.";
+        if ("zh".equals(lang)) return "• 怀马纳洛海湾 (15分钟) — 今日海面较平静，救生员值班中。\n• 恐龙湾 Hanauma Bay (8分钟) — 受保护的海洋生物保护区。";
+        return "• Waimānalo Bay (15 min) — Calmer today, lifeguards on duty.\n• Hanauma Bay (8 min) — Protected marine life conservation area.";
     }
 
     public static String getLocalizedHazard(Context context, String beachId) {
         String lang = getLanguage(context);
         if ("es".equals(lang)) {
-            if ("sandy-beach".equals(beachId)) return "• Rompiente: Las olas rompen directamente en la arena; lesiones graves de cuello y espalda ocurren incluso en días pequeños.\n• Corrientes de resaca: La fuerte resaca arrastra a los nadadores mar adentro.";
+            if ("sandy-beach".equals(beachId)) return "• Rompiente: Las olas rompen directamente en la arena; lesiones graves ocurren incluso en días pequeños.\n• Corrientes de resaca: La fuerte resaca arrastra a los nadadores mar adentro.";
             if ("kailua-beach".equals(beachId)) return "• Vientos fuertes: Los vientos alisios fuertes pueden empujar inflables mar adentro.\n• Picaduras: Ocasionales picaduras de carabela portuguesa.";
             if ("waimea-bay".equals(beachId)) return "• Rompiente invernal masiva y potentes corrientes de resaca en invierno.";
             if ("sunset-beach".equals(beachId)) return "• Rompiente invernal peligrosa, fuertes corrientes de resaca y canales de arrecife cambiantes.";
             if ("hanauma-bay".equals(beachId)) return "• Rocas de arrecife resbaladizas y fuerte exposición solar.";
             if ("makapuu-beach".equals(beachId)) return "• Rompiente severa, potente resaca y fuertes corrientes.";
+            return "• Se aplican los peligros oceánicos estándar. Verifique las condiciones locales.";
         } else if ("fr".equals(lang)) {
-            if ("sandy-beach".equals(beachId)) return "• Rouleau de bord : Les vagues déferlent directement sur le sable ; de graves blessures au cou et au dos s'y produisent même par petites vagues.\n• Courants de retour : Le puissant reflux entraîne les nageurs vers le large.";
+            if ("sandy-beach".equals(beachId)) return "• Rouleau de bord : Les vagues déferlent directement sur le sable ; de graves blessures au cou y surviennent.\n• Courants de retour : Le puissant reflux entraîne les nageurs vers le large.";
             if ("kailua-beach".equals(beachId)) return "• Vents forts : Les alizés soutenus peuvent pousser les embarcations gonflables au large.\n• Piqûres : Piqûres occasionnelles de galères portugaises.";
             if ("waimea-bay".equals(beachId)) return "• Rouleaux hivernaux massifs et puissants courants de retour en hiver. Calme en été.";
             if ("sunset-beach".equals(beachId)) return "• Rouleaux hivernaux dangereux, puissants courants de retour et passes de récif chaotiques.";
             if ("hanauma-bay".equals(beachId)) return "• Rochers coralliens glissants et forte exposition au soleil.";
             if ("makapuu-beach".equals(beachId)) return "• Rouleau de bord sévère, puissant reflux et forts courants de retour.";
+            return "• Les risques océaniques habituels s'appliquent. Vérifiez les conditions locales.";
         } else if ("ja".equals(lang)) {
-            if ("sandy-beach".equals(beachId)) return "• ショアブレイク: 波が砂浜に直接打ち付けます。小さな波の日でも首や背中の大怪我が発生します。\n• 離岸流: 強い引き波が泳ぎ手を沖へ引っ張ります。";
-            if ("kailua-beach".equals(beachId)) return "• 強風: 強い貿易風により浮き輪が沖へ流されることがあります。\n• クラゲ: ポルトガルマンボウ（カツオノエボシ）に注意。";
+            if ("sandy-beach".equals(beachId)) return "• ショアブレイク: 波が砂浜に直接打ち付けます。波が小さくても首や背中の怪我が発生します。\n• 離岸流: 強い引き波が泳ぎ手を沖へ引っ張ります。";
+            if ("kailua-beach".equals(beachId)) return "• 強風: 強い貿易風により浮き輪が沖へ流されることがあります。\n• クラゲ: カツオノエボシの刺傷に注意。";
             if ("waimea-bay".equals(beachId)) return "• 冬季の巨大なショアブレイクと強力な離岸流。夏期は穏やかです。";
             if ("sunset-beach".equals(beachId)) return "• 危険な冬季のショアブレイク、強い離岸流、複雑なリーフチャネル。";
             if ("hanauma-bay".equals(beachId)) return "• 滑りやすいサンゴ礁の岩場と強い日差し。";
             if ("makapuu-beach".equals(beachId)) return "• 激しいショアブレイク、強力なバックウォッシュ、強い離岸流。";
+            return "• 一般的な海洋の危険が適用されます。現地の海況を確認してください。";
         } else if ("ko".equals(lang)) {
-            if ("sandy-beach".equals(beachId)) return "• 쇼어브레이크: 파도가 모래사장에 직접 부딪쳐 작은 파도에서도 심각한 목/등 부상이 발생합니다.\n• 이안류: 강력한 역류가 수영객을 바다로 끌고 갑니다.";
+            if ("sandy-beach".equals(beachId)) return "• 쇼어브레이크: 파도가 모래사장에 직접 부딪쳐 작은 파도에서도 심각한 부상이 발생합니다.\n• 이안류: 강력한 역류가 수영객을 바다로 끌고 갑니다.";
             if ("kailua-beach".equals(beachId)) return "• 강풍: 강한 무역풍이 튜브 등을 바다 멀리 밀어낼 수 있습니다.\n• 해파리: 간헐적인 해파리 쏘임 주의.";
             if ("waimea-bay".equals(beachId)) return "• 겨울철 거대한 쇼어브레이크와 강력한 이안류. 여름철은 수영하기 안전합니다.";
             if ("sunset-beach".equals(beachId)) return "• 위험한 겨울철 쇼어브레이크, 강한 이안류, 수중 암초 채널.";
             if ("hanauma-bay".equals(beachId)) return "• 미끄러운 산호초 바위와 강한 햇빛.";
             if ("makapuu-beach".equals(beachId)) return "• 심각한 쇼어브레이크, 강력한 백워시, 강한 이안류.";
+            return "• 일반적인 해양 위험이 적용됩니다. 현지 기상 상황을 확인하세요.";
         } else if ("zh".equals(lang)) {
             if ("sandy-beach".equals(beachId)) return "• 岸边碎浪：波浪直接在沙滩上破碎；即使在浪小的时候也会发生严重的颈部和背部受伤。\n• 离岸流：强烈的回流会将游泳者拉向海中。";
             if ("kailua-beach".equals(beachId)) return "• 强风：强劲的信风可能会将充气玩具吹向外海。\n• 水母：偶有僧帽水母蛰伤。";
@@ -420,6 +559,7 @@ public class AppLocalization {
             if ("sunset-beach".equals(beachId)) return "• 危险的冬季岸边碎浪、强烈的离岸流以及多变的珊瑚礁通道。";
             if ("hanauma-bay".equals(beachId)) return "• 湿滑的珊瑚礁岩石以及强烈的阳光照射。";
             if ("makapuu-beach".equals(beachId)) return "• 剧烈的岸边碎浪、强劲的回流和强大的离岸流。";
+            return "• 存在常规海洋危险。请在下水前检查当地海况。";
         }
         return getEnglishHazard(beachId);
     }
@@ -449,24 +589,29 @@ public class AppLocalization {
             if ("sandy-beach".equals(beachId)) return "Parece atractivo desde el estacionamiento. Obsérvelo desde la arena a menos que sea un bodysurfer experimentado.";
             if ("kailua-beach".equals(beachId)) return "Generalmente más tranquilo dentro del arrecife, pero verifique la dirección del viento antes de salir en kayak.";
             if ("waimea-bay".equals(beachId)) return "Respete el oleaje de invierno. En verano, la bahía actúa como una piscina plácida.";
+            return "Verifique las condiciones de seguridad oceánica y consulte al salvavidas antes de entrar al agua.";
         } else if ("fr".equals(lang)) {
             if ("sandy-beach".equals(beachId)) return "Semble attrayant depuis le parking. Observez depuis le sable à moins d'être un bodysurfeur expérimenté.";
             if ("kailua-beach".equals(beachId)) return "Généralement plus calme à l'intérieur du récif, mais vérifiez le vent avant de sortir en kayak.";
             if ("waimea-bay".equals(beachId)) return "Respectez les vagues hivernales. En été, la baie ressemble à une piscine paisible.";
+            return "Consultez les conditions de sécurité et les sauveteurs avant de vous baigner.";
         } else if ("ja".equals(lang)) {
             if ("sandy-beach".equals(beachId)) return "駐車場からは魅力的に見えます。経験豊富なボディサーファーでなければ、砂浜から眺めるだけにしてください。";
             if ("kailua-beach".equals(beachId)) return "リーフ内は比較的穏やかですが、カヤックで出る前に風向きを確認してください。";
             if ("waimea-bay".equals(beachId)) return "冬季のサーフには敬意を払ってください。夏期は穏やかなプールのようになります。";
+            return "入水前に海洋安全情報とライフガードの指示を確認してください。";
         } else if ("ko".equals(lang)) {
             if ("sandy-beach".equals(beachId)) return "주차장에서 보면 매력적이지만, 숙련된 바디서퍼가 아니라면 모래사장에서 구경만 하세요.";
             if ("kailua-beach".equals(beachId)) return "산호초 안쪽은 대체로 잔잔하지만, 카약 탑승 전 풍향을 확인하세요.";
             if ("waimea-bay".equals(beachId)) return "겨울철 파도를 존중하세요. 여름에는 평온한 수영장 같습니다.";
+            return "입수 전 해양 안전 상태와 안전요원의 안내를 확인하세요.";
         } else if ("zh".equals(lang)) {
             if ("sandy-beach".equals(beachId)) return "从停车场看很诱人。除非您是经验丰富的冲浪高手，否则请在沙滩上观赏。";
             if ("kailua-beach".equals(beachId)) return "礁石内部通常较为平静，但在划皮划艇前请检查风向。";
             if ("waimea-bay".equals(beachId)) return "请敬畏冬季浪况。夏季时，海湾宛如平静的游泳池。";
+            return "入水前请检查海洋安全状况并咨询值班救生员。";
         }
-        return "Looks inviting from the parking lot. Watch from the sand unless you are an experienced bodysurfer.";
+        return "Check ocean safety conditions and consult on-duty lifeguards before entering the water.";
     }
 
     public static String getLocalizedGoodFor(Context context, BeachLocation beach) {
@@ -489,8 +634,23 @@ public class AppLocalization {
             goodStr = "适合";
             notGoodStr = "不适合";
         }
-        return "• " + goodStr + ": " + String.join(", ", beach.getGoodFor()) +
-                "\n• " + notGoodStr + ": " + String.join(", ", beach.getNotGoodFor());
+
+        List<String> goodList = new ArrayList<>();
+        if (beach.getGoodFor() != null) {
+            for (String item : beach.getGoodFor()) {
+                goodList.add(translateTag(lang, item));
+            }
+        }
+
+        List<String> notGoodList = new ArrayList<>();
+        if (beach.getNotGoodFor() != null) {
+            for (String item : beach.getNotGoodFor()) {
+                notGoodList.add(translateTag(lang, item));
+            }
+        }
+
+        return "• " + goodStr + ": " + String.join(", ", goodList) +
+                "\n• " + notGoodStr + ": " + String.join(", ", notGoodList);
     }
 
     public static String getLocalizedAmenities(Context context, BeachLocation beach) {
@@ -502,7 +662,277 @@ public class AppLocalization {
         else if ("ko".equals(lang)) amStr = "편의시설";
         else if ("zh".equals(lang)) amStr = "设施";
 
-        return "• " + amStr + ": " + String.join(", ", beach.getAmenities());
+        List<String> amList = new ArrayList<>();
+        if (beach.getAmenities() != null) {
+            for (String item : beach.getAmenities()) {
+                amList.add(translateTag(lang, item));
+            }
+        }
+
+        return "• " + amStr + ": " + String.join(", ", amList);
+    }
+
+    private static String translateTag(String lang, String tag) {
+        if (tag == null) return "";
+        String lower = tag.trim().toLowerCase(Locale.US);
+
+        if ("es".equals(lang)) {
+            if (lower.contains("swimming") && lower.contains("open")) return "natación en aguas abiertas";
+            if (lower.contains("swimming") && lower.contains("casual")) return "natación casual";
+            if (lower.contains("swimming") && lower.contains("beginner")) return "nadadores principiantes";
+            if (lower.contains("swimming")) return "natación";
+            if (lower.contains("families")) return "familias";
+            if (lower.contains("beginners")) return "principiantes";
+            if (lower.contains("paddleboarding")) return "paddleboard";
+            if (lower.contains("big wave")) return "surf de olas grandes";
+            if (lower.contains("sunbathing")) return "tomar el sol";
+            if (lower.contains("volleyball")) return "voleibol";
+            if (lower.contains("picnics") || lower.contains("picnicking")) return "picnic";
+            if (lower.contains("deep diving")) return "buceo profundo";
+            if (lower.contains("learning to surf")) return "aprender a surfear";
+            if (lower.contains("outrigger")) return "canoa hawaiana";
+            if (lower.contains("solitude")) return "tranquilidad";
+            if (lower.contains("wading")) return "vadeo";
+            if (lower.contains("toddlers")) return "niños pequeños";
+            if (lower.contains("lap swimming")) return "natación intensa";
+            if (lower.contains("bodyboarding")) return "bodyboard";
+            if (lower.contains("snorkeling")) return "snorkel";
+            if (lower.contains("sunsets")) return "ver el atardecer";
+            if (lower.contains("barefoot")) return "caminar descalzo";
+            if (lower.contains("high surf bodysurfing")) return "bodysurf en olas altas";
+            if (lower.contains("relaxing")) return "relajación";
+            if (lower.contains("reading")) return "lectura";
+            if (lower.contains("commercial")) return "deportes náuticos";
+            if (lower.contains("jogging")) return "trotar";
+            if (lower.contains("watching boats")) return "observar barcos";
+            if (lower.contains("young kids") || lower.contains("children")) return "niños pequeños";
+            if (lower.contains("walking")) return "caminar por la playa";
+            if (lower.contains("ocean views")) return "vistas al mar";
+            if (lower.contains("kites")) return "volar cometas";
+            if (lower.contains("lounging")) return "descanso en playa";
+            if (lower.contains("spectating") || lower.contains("watching")) return "observar la costa";
+            if (lower.contains("fishing")) return "pesca";
+            if (lower.contains("resort")) return "natación en resort";
+            if (lower.contains("restrooms")) return "baños";
+            if (lower.contains("showers")) return "duchas";
+            if (lower.contains("parking")) return "estacionamiento";
+            if (lower.contains("lifeguard")) return "torre de salvavidas";
+            if (lower.contains("rentals")) return "alquiler de equipos";
+            if (lower.contains("hula")) return "escenario hula";
+            if (lower.contains("pier")) return "muelle";
+            if (lower.contains("shady palms")) return "palmeras con sombra";
+            if (lower.contains("benches")) return "bancos de parque";
+            if (lower.contains("lawn")) return "césped del parque";
+            if (lower.contains("paved")) return "camino pavimentado";
+            if (lower.contains("food")) return "puestos de comida";
+            if (lower.contains("playground")) return "parque infantil";
+            if (lower.contains("beach access")) return "acceso a la playa";
+        } else if ("fr".equals(lang)) {
+            if (lower.contains("swimming") && lower.contains("open")) return "nage en eau libre";
+            if (lower.contains("swimming") && lower.contains("casual")) return "baignade loisir";
+            if (lower.contains("swimming") && lower.contains("beginner")) return "nageurs débutants";
+            if (lower.contains("swimming")) return "baignade";
+            if (lower.contains("families")) return "familles";
+            if (lower.contains("beginners")) return "débutants";
+            if (lower.contains("paddleboarding")) return "paddle";
+            if (lower.contains("big wave")) return "surf de grosses vagues";
+            if (lower.contains("sunbathing")) return "bain de soleil";
+            if (lower.contains("volleyball")) return "volleyball";
+            if (lower.contains("picnics") || lower.contains("picnicking")) return "pique-nique";
+            if (lower.contains("deep diving")) return "plongée profonde";
+            if (lower.contains("learning to surf")) return "apprentissage du surf";
+            if (lower.contains("outrigger")) return "pirogue hawaïenne";
+            if (lower.contains("solitude")) return "tranquillité";
+            if (lower.contains("wading")) return "pataugeage";
+            if (lower.contains("toddlers")) return "tout-petits";
+            if (lower.contains("lap swimming")) return "nage sportive";
+            if (lower.contains("bodyboarding")) return "bodyboard";
+            if (lower.contains("snorkeling")) return "snorkeling";
+            if (lower.contains("sunsets")) return "coucher de soleil";
+            if (lower.contains("barefoot")) return "marche pieds nus";
+            if (lower.contains("high surf bodysurfing")) return "bodysurf par fortes vagues";
+            if (lower.contains("relaxing")) return "détente";
+            if (lower.contains("reading")) return "lecture";
+            if (lower.contains("commercial")) return "sports nautiques";
+            if (lower.contains("jogging")) return "jogging";
+            if (lower.contains("watching boats")) return "observation des bateaux";
+            if (lower.contains("young kids") || lower.contains("children")) return "jeunes enfants";
+            if (lower.contains("walking")) return "balade sur la plage";
+            if (lower.contains("ocean views")) return "vues sur l'océan";
+            if (lower.contains("kites")) return "cerf-volant";
+            if (lower.contains("lounging")) return "farniente";
+            if (lower.contains("spectating") || lower.contains("watching")) return "observation";
+            if (lower.contains("fishing")) return "pêche";
+            if (lower.contains("resort")) return "baignade de station";
+            if (lower.contains("restrooms")) return "toilettes";
+            if (lower.contains("showers")) return "douches";
+            if (lower.contains("parking")) return "parking";
+            if (lower.contains("lifeguard")) return "poste de secours";
+            if (lower.contains("rentals")) return "location de matériel";
+            if (lower.contains("hula")) return "scène d'hula";
+            if (lower.contains("pier")) return "jetée";
+            if (lower.contains("shady palms")) return "palmiers ombragés";
+            if (lower.contains("benches")) return "bancs";
+            if (lower.contains("lawn")) return "pelouse du parc";
+            if (lower.contains("paved")) return "sentier pavé";
+            if (lower.contains("food")) return "stands de nourriture";
+            if (lower.contains("playground")) return "aire de jeux";
+            if (lower.contains("beach access")) return "accès à la plage";
+        } else if ("ja".equals(lang)) {
+            if (lower.contains("swimming") && lower.contains("open")) return "遠泳・オープンウォーター";
+            if (lower.contains("swimming") && lower.contains("casual")) return "カジュアルスイミング";
+            if (lower.contains("swimming") && lower.contains("beginner")) return "水泳初心者";
+            if (lower.contains("swimming")) return "海水浴";
+            if (lower.contains("families")) return "ご家族連れ";
+            if (lower.contains("beginners")) return "初心者";
+            if (lower.contains("paddleboarding")) return "スタンドアップパドル";
+            if (lower.contains("big wave")) return "ビッグウェーブサーフィン";
+            if (lower.contains("sunbathing")) return "日光浴";
+            if (lower.contains("volleyball")) return "ビーチバレー";
+            if (lower.contains("picnics") || lower.contains("picnicking")) return "ピクニック";
+            if (lower.contains("deep diving")) return "ダイビング";
+            if (lower.contains("learning to surf")) return "サーフィン体験";
+            if (lower.contains("outrigger")) return "アウトリガーカヌー";
+            if (lower.contains("solitude")) return "静寂・リラックス";
+            if (lower.contains("wading")) return "水遊び";
+            if (lower.contains("toddlers")) return "幼児";
+            if (lower.contains("lap swimming")) return "遠泳";
+            if (lower.contains("bodyboarding")) return "ボディボード";
+            if (lower.contains("snorkeling")) return "シュノーケリング";
+            if (lower.contains("sunsets")) return "夕日鑑賞";
+            if (lower.contains("barefoot")) return "素足での散策";
+            if (lower.contains("high surf bodysurfing")) return "大波ボディサーフィン";
+            if (lower.contains("relaxing")) return "のんびり休憩";
+            if (lower.contains("reading")) return "読書";
+            if (lower.contains("commercial")) return "マリンアクティビティ";
+            if (lower.contains("jogging")) return "ジョギング";
+            if (lower.contains("watching boats")) return "船の鑑賞";
+            if (lower.contains("young kids") || lower.contains("children")) return "お子様連れ";
+            if (lower.contains("walking")) return "ビーチ散策";
+            if (lower.contains("ocean views")) return "オーシャンビュー";
+            if (lower.contains("kites")) return "凧揚げ";
+            if (lower.contains("lounging")) return "ビーチでの休憩";
+            if (lower.contains("spectating") || lower.contains("watching")) return "波の観賞";
+            if (lower.contains("fishing")) return "釣り";
+            if (lower.contains("resort")) return "リゾート水泳";
+            if (lower.contains("restrooms")) return "トイレ";
+            if (lower.contains("showers")) return "シャワー";
+            if (lower.contains("parking")) return "駐車場";
+            if (lower.contains("lifeguard")) return "ライフガードタワー";
+            if (lower.contains("rentals")) return "レンタルショップ";
+            if (lower.contains("hula")) return "フラマウンド";
+            if (lower.contains("pier")) return "桟橋";
+            if (lower.contains("shady palms")) return "木陰のヤシの木";
+            if (lower.contains("benches")) return "ベンチ";
+            if (lower.contains("lawn")) return "芝生広場";
+            if (lower.contains("paved")) return "舗装遊歩道";
+            if (lower.contains("food")) return "売店";
+            if (lower.contains("playground")) return "遊具広場";
+            if (lower.contains("beach access")) return "ビーチアクセス";
+        } else if ("ko".equals(lang)) {
+            if (lower.contains("swimming") && lower.contains("open")) return "오픈워터 수영";
+            if (lower.contains("swimming") && lower.contains("casual")) return "일반 수영";
+            if (lower.contains("swimming") && lower.contains("beginner")) return "초보 수영객";
+            if (lower.contains("swimming")) return "해수욕";
+            if (lower.contains("families")) return "가족 단위";
+            if (lower.contains("beginners")) return "초보자";
+            if (lower.contains("paddleboarding")) return "패들보딩";
+            if (lower.contains("big wave")) return "빅웨이브 서핑";
+            if (lower.contains("sunbathing")) return "일광욕";
+            if (lower.contains("volleyball")) return "비치 발리볼";
+            if (lower.contains("picnics") || lower.contains("picnicking")) return "피크닉";
+            if (lower.contains("deep diving")) return "깊은 다이빙";
+            if (lower.contains("learning to surf")) return "서핑 배우기";
+            if (lower.contains("outrigger")) return "아우트리거 카누";
+            if (lower.contains("solitude")) return "조용한 휴식";
+            if (lower.contains("wading")) return "물놀이";
+            if (lower.contains("toddlers")) return "어린아이";
+            if (lower.contains("lap swimming")) return "장거리 수영";
+            if (lower.contains("bodyboarding")) return "바디보딩";
+            if (lower.contains("snorkeling")) return "스노클링";
+            if (lower.contains("sunsets")) return "일몰 감상";
+            if (lower.contains("barefoot")) return "맨발 산책";
+            if (lower.contains("high surf bodysurfing")) return "거친 파도 바디서핑";
+            if (lower.contains("relaxing")) return "휴식";
+            if (lower.contains("reading")) return "독서";
+            if (lower.contains("commercial")) return "해양 스포츠";
+            if (lower.contains("jogging")) return "조깅";
+            if (lower.contains("watching boats")) return "배 구경";
+            if (lower.contains("young kids") || lower.contains("children")) return "어린이";
+            if (lower.contains("walking")) return "해변 산책";
+            if (lower.contains("ocean views")) return "바다 전망";
+            if (lower.contains("kites")) return "연날리기";
+            if (lower.contains("lounging")) return "모래사장 휴식";
+            if (lower.contains("spectating") || lower.contains("watching")) return "파도 관람";
+            if (lower.contains("fishing")) return "낚시";
+            if (lower.contains("resort")) return "리조트형 수영";
+            if (lower.contains("restrooms")) return "화장실";
+            if (lower.contains("showers")) return "샤워실";
+            if (lower.contains("parking")) return "주차장";
+            if (lower.contains("lifeguard")) return "안전요원 타워";
+            if (lower.contains("rentals")) return "장비 대여소";
+            if (lower.contains("hula")) return "훌라 무대";
+            if (lower.contains("pier")) return "선착장";
+            if (lower.contains("shady palms")) return "그늘진 야자수";
+            if (lower.contains("benches")) return "벤치";
+            if (lower.contains("lawn")) return "잔디밭";
+            if (lower.contains("paved")) return "포장 산책로";
+            if (lower.contains("food")) return "매점";
+            if (lower.contains("playground")) return "놀이터";
+            if (lower.contains("beach access")) return "해변 진입로";
+        } else if ("zh".equals(lang)) {
+            if (lower.contains("swimming") && lower.contains("open")) return "公开水域游泳";
+            if (lower.contains("swimming") && lower.contains("casual")) return "休闲游泳";
+            if (lower.contains("swimming") && lower.contains("beginner")) return "初级水泳者";
+            if (lower.contains("swimming")) return "海水游泳";
+            if (lower.contains("families")) return "家庭亲子";
+            if (lower.contains("beginners")) return "初学者";
+            if (lower.contains("paddleboarding")) return "桨板运动";
+            if (lower.contains("big wave")) return "巨浪冲浪";
+            if (lower.contains("sunbathing")) return "日光浴";
+            if (lower.contains("volleyball")) return "沙滩排球";
+            if (lower.contains("picnics") || lower.contains("picnicking")) return "野餐";
+            if (lower.contains("deep diving")) return "深水潜水";
+            if (lower.contains("learning to surf")) return "学习冲浪";
+            if (lower.contains("outrigger")) return "划桨支架舟";
+            if (lower.contains("solitude")) return "清静宁静";
+            if (lower.contains("wading")) return "浅水涉水";
+            if (lower.contains("toddlers")) return "幼儿";
+            if (lower.contains("lap swimming")) return "长途游泳";
+            if (lower.contains("bodyboarding")) return "身体冲浪板";
+            if (lower.contains("snorkeling")) return "浮潜";
+            if (lower.contains("sunsets")) return "观赏日落";
+            if (lower.contains("barefoot")) return "赤脚散步";
+            if (lower.contains("high surf bodysurfing")) return "巨浪人体冲浪";
+            if (lower.contains("relaxing")) return "休养放松";
+            if (lower.contains("reading")) return "海边阅读";
+            if (lower.contains("commercial")) return "商业水上运动";
+            if (lower.contains("jogging")) return "海边慢跑";
+            if (lower.contains("watching boats")) return "观赏船只";
+            if (lower.contains("young kids") || lower.contains("children")) return "年幼儿童";
+            if (lower.contains("walking")) return "海滩散步";
+            if (lower.contains("ocean views")) return "观赏海景";
+            if (lower.contains("kites")) return "放风筝";
+            if (lower.contains("lounging")) return "沙滩憩息";
+            if (lower.contains("spectating") || lower.contains("watching")) return "岸边观浪";
+            if (lower.contains("fishing")) return "垂钓";
+            if (lower.contains("resort")) return "度假村游泳";
+            if (lower.contains("restrooms")) return "洗手间";
+            if (lower.contains("showers")) return "淋浴设施";
+            if (lower.contains("parking")) return "停车场";
+            if (lower.contains("lifeguard")) return "救生员塔";
+            if (lower.contains("rentals")) return "器材租赁";
+            if (lower.contains("hula")) return "草裙舞舞台";
+            if (lower.contains("pier")) return "码头";
+            if (lower.contains("shady palms")) return "遮荫棕榈树";
+            if (lower.contains("benches")) return "公园长椅";
+            if (lower.contains("lawn")) return "绿化草坪";
+            if (lower.contains("paved")) return "铺砌步道";
+            if (lower.contains("food")) return "小吃餐亭";
+            if (lower.contains("playground")) return "游乐设施";
+            if (lower.contains("beach access")) return "通往沙滩通道";
+        }
+        return tag;
     }
 
     public static String getLocalizedDescription(Context context, BeachLocation beach) {

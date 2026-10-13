@@ -513,6 +513,7 @@
                             android:layout_marginBottom="12dp" />
 
                         <TextView
+                            android:id="@+id/tvMalama"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Mālama ʻāina: Stay 10 ft away from sea turtles and 50 ft from Hawaiian monk seals. Pack out your trash and protect the reef."
@@ -539,6 +540,7 @@
         android:focusable="true">
 
         <TextView
+            android:id="@+id/lblEmergencyAssistance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="EMERGENCY ASSISTANCE"
@@ -569,6 +571,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
+            android:id="@+id/tvFirstAidSteps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Quick First Aid Steps:\n• Rip current: Swim parallel to shore, nimble/safe emergency care."
